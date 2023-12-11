@@ -26,6 +26,10 @@ def event_trigger(event_type: str, str_expr=None, kwargs=None) -> Callable:
     ...
 
 
+def mqtt_trigger(topic: str, str_expr: Optional[str] = None, kwargs: Optional[dict] = None) -> Callable:
+    ...
+
+
 def pyscript_compile() -> Callable:
     ...
 
