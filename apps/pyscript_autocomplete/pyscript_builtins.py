@@ -1,5 +1,5 @@
 from asyncio import Task
-from typing import Any, Callable, List, Literal, Optional
+from typing import Any, Callable, List, Literal, Optional, Set, Union
 
 from homeassistant.core import HomeAssistant, Context
 
@@ -8,12 +8,14 @@ hass = HomeAssistant("")
 """pyscript decorators"""
 
 
-def service(*service_name, supports_response: Literal["none", "only", "optional"] = "none") -> Callable:
+def service(*service_name: str, supports_response: Literal["none", "only", "optional"] = "none") -> Callable:
     ...
 
 
 def state_trigger(
-    *str_expr: str, state_hold=None, state_hold_false=None, state_check_now=False, kwargs=None, watch=None
+        *str_expr: str, state_hold: Optional[int] = None, state_hold_false: Optional[int] = None,
+        state_check_now: Optional[bool] = None, kwargs: Optional[dict] = None,
+        watch: Optional[Union[List[str], Set[str]]] = None
 ) -> Callable:
     ...
 
@@ -30,7 +32,7 @@ def task_unique(name: str, kill_me=False) -> Callable:
     ...
 
 
-def event_trigger(event_type: str, str_expr=None, kwargs=None) -> Callable:
+def event_trigger(event_type: str, str_expr=None, kwargs: Optional[dict] = None) -> Callable:
     ...
 
 
