@@ -26,6 +26,10 @@ def event_trigger(event_type: str, str_expr=None, kwargs=None) -> Callable:
     ...
 
 
+def time_active(*time_spec: str, hold_off: Optional[int] = None) -> Callable:
+    ...
+
+
 def pyscript_compile() -> Callable:
     ...
 
