@@ -52,56 +52,55 @@ class Generator:
         arg_option_list = []
         default_list = []
 
-        if "fields" in service:
-            for field_name, field in service["fields"].items():
-                description = field.get("description")
-                if description is not None:
-                    docstring += f":param {field_name}: {description}\n{self.DOCSTRING_INDENT}"
+        for field_name, field in service.get("fields", {}).items():
+            description = field.get("description")
+            if description is not None:
+                docstring += f":param {field_name}: {description}\n{self.DOCSTRING_INDENT}"
 
-                arg_annotation = None
-                default_value = None
+            arg_annotation = None
+            default_value = None
 
-                # TODO check documentation for multiple selectors
-                for selector_id, selector in field.get("selector", {}).items():
-                    if selector_id == "number":
-                        # TODO add min, max... to docstring
-                        is_float = False
-                        if "step" in selector:
-                            is_float = isinstance(selector["step"], float) or selector["step"] == "any"
+            # TODO check documentation for multiple selectors
+            for selector_id, selector in field.get("selector", {}).items():
+                if selector_id == "number":
+                    # TODO add min, max... to docstring
+                    is_float = False
+                    if "step" in selector:
+                        is_float = isinstance(selector["step"], float) or selector["step"] == "any"
 
-                        arg_annotation = ast.Name(id="float" if is_float else "int")
-                        default_value = 0
-                    elif selector_id == "boolean":
-                        arg_annotation = ast.Name(id="bool")
-                        default_value = False
-                    elif selector_id in ("text", "date", "datetime", "time"):
-                        arg_annotation = ast.Name(id="str")
-                        default_value = ""
-                    elif selector_id == "select":
-                        default_value = ""
+                    arg_annotation = ast.Name(id="float" if is_float else "int")
+                    default_value = 0
+                elif selector_id == "boolean":
+                    arg_annotation = ast.Name(id="bool")
+                    default_value = False
+                elif selector_id in ("text", "date", "datetime", "time"):
+                    arg_annotation = ast.Name(id="str")
+                    default_value = ""
+                elif selector_id == "select":
+                    default_value = ""
 
-                        options = selector.get("options")
-                        elts = [ast.Constant(value="")]
-                        for option in options:
-                            if isinstance(option, dict):
-                                elts.append(ast.Constant(value=option["value"]))
-                            else:
-                                elts.append(ast.Constant(value=option))
+                    options = selector.get("options")
+                    elts = [ast.Constant(value="")]
+                    for option in options:
+                        if isinstance(option, dict):
+                            elts.append(ast.Constant(value=option["value"]))
+                        else:
+                            elts.append(ast.Constant(value=option))
 
-                        arg_annotation = ast.Subscript(
-                            value=ast.Name(id="Literal"),
-                            slice=ast.Index(value=ast.Tuple(elts=elts)),
-                        )
-                        # TODO add options to docstring
-                    # else config_entry | object | entity
+                    arg_annotation = ast.Subscript(
+                        value=ast.Name(id="Literal"),
+                        slice=ast.Index(value=ast.Tuple(elts=elts)),
+                    )
+                    # TODO add options to docstring
+                # else config_entry | object | entity
 
-                ast_arg = ast.arg(arg=field_name, annotation=arg_annotation)
+            ast_arg = ast.arg(arg=field_name, annotation=arg_annotation)
 
-                if "required" in field and field["required"] is True:
-                    arg_list.append(ast_arg)
-                else:
-                    arg_option_list.append(ast_arg)
-                    default_list.append(ast.Constant(default_value))
+            if "required" in field and field["required"] is True:
+                arg_list.append(ast_arg)
+            else:
+                arg_option_list.append(ast_arg)
+                default_list.append(ast.Constant(default_value))
 
         service_args = ast.arguments(
             args=arg_list + arg_option_list,
