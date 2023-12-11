@@ -18,7 +18,15 @@ def state_trigger(
     ...
 
 
+def state_active(str_expr: str) -> Callable:
+    ...
+
+
 def time_trigger(*args, **kwargs) -> Callable:
+    ...
+
+
+def task_unique(name: str, kill_me=False) -> Callable:
     ...
 
 
@@ -27,6 +35,10 @@ def event_trigger(event_type: str, str_expr=None, kwargs=None) -> Callable:
 
 
 def time_active(*time_spec: str, hold_off: Optional[int] = None) -> Callable:
+    ...
+
+
+def mqtt_trigger(topic: str, str_expr: Optional[str] = None, kwargs: Optional[dict] = None) -> Callable:
     ...
 
 
