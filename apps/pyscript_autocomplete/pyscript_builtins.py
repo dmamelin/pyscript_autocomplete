@@ -13,9 +13,12 @@ def service(*service_name: str, supports_response: Literal["none", "only", "opti
 
 
 def state_trigger(
-        *str_expr: str, state_hold: Optional[int] = None, state_hold_false: Optional[int] = None,
-        state_check_now: Optional[bool] = None, kwargs: Optional[dict] = None,
-        watch: Optional[Union[List[str], Set[str]]] = None
+    *str_expr: str,
+    state_hold: Optional[int] = None,
+    state_hold_false: Optional[int] = None,
+    state_check_now: Optional[bool] = None,
+    kwargs: Optional[dict] = None,
+    watch: Optional[Union[List[str], Set[str]]] = None
 ) -> Callable:
     ...
 
