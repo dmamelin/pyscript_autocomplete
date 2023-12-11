@@ -22,6 +22,10 @@ def time_trigger(*args, **kwargs) -> Callable:
     ...
 
 
+def task_unique(name: str, kill_me=False) -> Callable:
+    ...
+
+
 def event_trigger(event_type: str, str_expr=None, kwargs=None) -> Callable:
     ...
 
