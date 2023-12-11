@@ -59,10 +59,10 @@ class Generator:
                     docstring += f":param {field_name}: {description}\n{self.DOCSTRING_INDENT}"
 
                 arg_annotation = None
-
                 default_value = None
+
                 # TODO check documentation for multiple selectors
-                for selector_id, selector in field["selector"].items():
+                for selector_id, selector in field.get("selector", {}).items():
                     if selector_id == "number":
                         # TODO add min, max... to docstring
                         is_float = False
