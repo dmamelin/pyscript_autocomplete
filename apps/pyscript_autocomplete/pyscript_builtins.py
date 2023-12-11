@@ -18,6 +18,10 @@ def state_trigger(
     ...
 
 
+def state_active(str_expr: str) -> Callable:
+    ...
+
+
 def time_trigger(*args, **kwargs) -> Callable:
     ...
 
