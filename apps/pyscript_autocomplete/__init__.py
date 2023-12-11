@@ -61,6 +61,9 @@ class Generator:
                 arg_annotation = None
 
                 default_value = None
+                if 'selector' not in field.keys():
+                    continue
+
                 # TODO check documentation for multiple selectors
                 for selector_id, selector in field["selector"].items():
                     if selector_id == "number":
