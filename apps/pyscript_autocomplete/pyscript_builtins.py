@@ -118,54 +118,63 @@ class task:
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-management
         """
+        ...
 
     @staticmethod
     def cancel(task_id: Optional[Task] = None):
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-management
         """
+        ...
 
     @staticmethod
     def current_task() -> Task:
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-management
         """
+        ...
 
     @staticmethod
     def name2id(name=None) -> Task:
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-management
         """
+        ...
 
     @staticmethod
     def wait(task_set: Optional[Set[Task]], **kwargs):
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-management
         """
+        ...
 
     @staticmethod
     def add_done_callback(task_id: Task, func: Callable, *args, **kwargs):
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-management
         """
+        ...
 
     @staticmethod
     def remove_done_callback(task_id: Task, func: Callable):
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-management
         """
+        ...
 
     @staticmethod
     def executor(func: Callable, *args, **kwargs):
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-executor
         """
+        ...
 
     @staticmethod
     def sleep(seconds: int):
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-sleep
         """
+        ...
 
     @staticmethod
     def unique(task_name: str, kill_me: bool = False):
@@ -178,6 +187,7 @@ class task:
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-waiting
         """
+        ...
 
 
 class pyscript(Any):
