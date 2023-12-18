@@ -1,11 +1,12 @@
 import ast
 import builtins
+import keyword
 import os
 import re
 import shutil
+
 from custom_components.pyscript.const import FOLDER
 from custom_components.pyscript.state import STATE_VIRTUAL_ATTRS
-
 from homeassistant.core import split_entity_id
 from homeassistant.helpers import service as ha_service
 from homeassistant.helpers.entity_registry import EntityRegistry
@@ -43,6 +44,9 @@ class Generator:
             self.domains[domain_id] = domain
         return domain
 
+    def is_valid_identifier(self, identifier) -> bool:
+        return identifier.isidentifier() and not keyword.iskeyword(identifier)
+
     def create_service(self, domain_id, service_id, service):
         docstring = "\n" + self.DOCSTRING_INDENT
         docstring += service["description"]
@@ -56,6 +60,12 @@ class Generator:
             description = field.get("description")
             if description is not None:
                 docstring += f":param {field_name}: {description}\n{self.DOCSTRING_INDENT}"
+
+            if not self.is_valid_identifier(field_name):
+                fqn = f"{domain_id}.{service_id}({field_name})"
+                self.invalid_identifiers.append(fqn)
+                log.warning(f"Invalid python identifier {fqn}")
+                continue
 
             arg_annotation = None
             default_value = None
@@ -164,7 +174,7 @@ class Generator:
                 if self.skip(fqn):
                     continue
                 try:
-                    if not service_id.isidentifier():
+                    if not self.is_valid_identifier(service_id):
                         self.invalid_identifiers.append(fqn)
                         log.warning(f"Invalid python identifier {fqn}")
                         continue
@@ -182,7 +192,7 @@ class Generator:
             fqn = f"{domain_id}.{entity_id}.{attr}"
             if self.skip(fqn):
                 continue
-            if not attr.isidentifier():
+            if not self.is_valid_identifier(attr):
                 self.invalid_identifiers.append(fqn)
                 log.warning(f"Invalid python identifier {fqn}")
                 continue
@@ -200,7 +210,7 @@ class Generator:
 
                 domain_id, entity_id = split_entity_id(entity.entity_id)
 
-                if not entity_id.isidentifier():
+                if not self.is_valid_identifier(entity_id):
                     self.invalid_identifiers.append(entity.entity_id)
                     log.warning(f"Invalid python identifier {entity.entity_id}")
                     continue
