@@ -1,5 +1,5 @@
 from asyncio import Task
-from typing import Any, Callable, List, Literal, Optional, Set, Union
+from typing import Any, Callable, List, Literal, Optional, Set, Union, Dict
 
 from homeassistant.core import HomeAssistant, Context
 
@@ -183,7 +183,16 @@ class task:
         """
 
     @staticmethod
-    def wait_until(**kwargs):
+    def wait_until(
+        state_trigger: Optional[Union[str, List[str]]] = None,
+        time_trigger: Optional[Union[str, List[str]]] = None,
+        event_trigger: Optional[Union[str, List[str]]] = None,
+        mqtt_trigger: Optional[Union[str, List[str]]] = None,
+        timeout: Optional[int] = None,
+        state_check_now: Optional[bool] = None,
+        state_hold: Optional[int] = None,
+        state_hold_false: Optional[int] = None,
+    ) -> Dict:
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-waiting
         """
