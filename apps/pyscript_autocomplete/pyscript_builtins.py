@@ -1,9 +1,8 @@
 from asyncio import Task
-from typing import Any, Callable, List, Literal, Optional, Set, Union, Dict
+from typing import Any, Callable, List, Literal, Optional, Set, Union
 
 from homeassistant.core import HomeAssistant, Context
 
-# noinspection PyArgumentList
 hass = HomeAssistant("")
 
 """pyscript decorators"""
@@ -59,7 +58,6 @@ def pyscript_executor() -> Callable:
 # """pyscript buildins"""
 
 
-# noinspection PyShadowingBuiltins,PyPep8Naming
 class log:
     @staticmethod
     def debug(str):
@@ -78,7 +76,6 @@ class log:
         ...
 
 
-# noinspection PyPep8Naming
 class state:
     @staticmethod
     def delete(name: str):
@@ -109,14 +106,12 @@ class state:
         ...
 
 
-# noinspection PyPep8Naming
 class event:
     @staticmethod
     def fire(event_type, **kwargs):
         ...
 
 
-# noinspection PyPep8Naming
 class task:
     @staticmethod
     def create(func: Callable, *args, **kwargs) -> Task:
@@ -187,25 +182,14 @@ class task:
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-unique-function
         """
 
-    # noinspection PyShadowingNames
     @staticmethod
-    def wait_until(
-        state_trigger: Optional[Union[str, List[str]]] = None,
-        time_trigger: Optional[Union[str, List[str]]] = None,
-        event_trigger: Optional[Union[str, List[str]]] = None,
-        mqtt_trigger: Optional[Union[str, List[str]]] = None,
-        timeout: Optional[int] = None,
-        state_check_now: Optional[bool] = None,
-        state_hold: Optional[int] = None,
-        state_hold_false: Optional[int] = None,
-    ) -> Dict:
+    def wait_until(**kwargs):
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-waiting
         """
         ...
 
 
-# noinspection PyPep8Naming
 class pyscript(Any):
     app_config: dict[str, Any]
 
