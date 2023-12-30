@@ -170,7 +170,7 @@ class task:
         ...
 
     @staticmethod
-    def sleep(seconds: int):
+    def sleep(seconds: Union[int, float]):
         """
         https://hacs-pyscript.readthedocs.io/en/stable/reference.html#task-sleep
         """
