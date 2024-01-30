@@ -14,7 +14,6 @@ This **experimental** project offers a solution to enhance PyScript script devel
 
 
 ## Installation
-- **Create Mock File**: In the `pyscript/modules/` directory, create an empty file named `pyscript_mock.py`.
 - **Update PyScript Configuration**: Enable `allow_all_imports` and `hass_is_global` in your PyScript [configuration](https://github.com/custom-components/pyscript#configuration)
 - **Configure PyScript**: Add the following to your PyScript configuration in `configuration.yaml`
     - add to pyscript configuration
@@ -24,12 +23,11 @@ This **experimental** project offers a solution to enhance PyScript script devel
     ```
     - Copy the `apps/pyscript_autocomplete` folder to your PyScript directory.
 - **Generate Autocomplete Data**: Use the Home Assistant UI to call the `pyscript.autocomplete_generator` service.
-- **Integrate with Local Project**: Copy the `pyscript_mock` directory from your PyScript directory to your local project directory.
+- **Integrate with Local Project**: add `pyscript/modules` as source root in your IDE.
 - **Import in PyScript Files**: In any PyScript file, add the line `from pyscript_mock import *` for autocomplete functionality.
 
 ## Advanced Configuration
 
-- `target_path:` Specifies the directory for writing generated files. The default is `pyscript/pyscript_mock/`.
 - `exclude:` A list of regular expressions used to exclude specific services, sensors, and attributes. By default, this list is empty, meaning nothing is excluded.
 - `include:` A list of regular expressions to specifically include certain services, sensors, and attributes. By default, all are included.
 
@@ -37,7 +35,6 @@ Example:
 ```yaml
 apps:
   pyscript_autocomplete:
-    target_path: /tmp/pyscript_mock/
     exclude:
         - person\.test\.friendly_name
     include:

@@ -11,7 +11,14 @@ from homeassistant.core import split_entity_id
 from homeassistant.helpers import service as ha_service
 from homeassistant.helpers.entity_registry import EntityRegistry
 
-from .loader import *
+from pyscript_mock import *
+# noinspection PyBroadException
+try:
+    """works in pyscript environment only"""
+    # noinspection PyUnresolvedReferences,PyUnboundLocalVariable
+    task.current_task()
+except:
+    from pyscript_builtins import *
 
 
 class Generator:
@@ -303,15 +310,20 @@ def autocomplete_generator():
 
     error_list = []
 
-    empty_module = hass.config.path(FOLDER + f"/modules/{module_name}.py")
-    if not os.path.exists(empty_module):
-        error_list.append(f"{empty_module} does not exists")
+    """Check for old loader files"""
+    old_files = (hass.config.path(FOLDER + f"/modules/{module_name}.py"), hass.config.path(FOLDER + f"/{module_name}/"))
+    for old_file in old_files:
+        if os.path.exists(old_file):
+            error_list.append(f"{old_file} exists, please remove it")
 
-    target_path = cfg.get("target_path")
-    if not target_path:
-        target_path = hass.config.path(FOLDER + f"/{module_name}/")
-    if not os.access(target_path, os.W_OK):
-        error_list.append(f"{target_path} does not exist or is not writable")
+    target_path = hass.config.path(FOLDER + f"/modules/{module_name}/")
+    try:
+        os.makedirs(target_path, exist_ok=True)
+    except OSError:
+        error_list.append(f"Creation of the directory {target_path} failed")
+
+    if os.path.exists(target_path) and not os.access(target_path, os.W_OK):
+        error_list.append(f"{target_path} is not writable")
 
     include = cfg.get("include") or []
     include_regexes = []
