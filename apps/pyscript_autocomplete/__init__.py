@@ -82,7 +82,7 @@ class Generator:
                 if selector_id == "number":
                     # TODO add min, max... to docstring
                     is_float = False
-                    if "step" in selector:
+                    if selector and "step" in selector:
                         is_float = isinstance(selector["step"], float) or selector["step"] == "any"
 
                     arg_annotation = ast.Name(id="float" if is_float else "int")
