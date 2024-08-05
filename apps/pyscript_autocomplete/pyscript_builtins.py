@@ -1,7 +1,7 @@
 from asyncio import Task
 from typing import Any, Callable, List, Literal, Optional, Set, Union, Dict
 
-from homeassistant.core import HomeAssistant, Context
+from homeassistant.core import HomeAssistant
 
 hass = HomeAssistant("")
 

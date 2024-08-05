@@ -11,7 +11,6 @@ from homeassistant.core import split_entity_id
 from homeassistant.helpers import service as ha_service
 from homeassistant.helpers.entity_registry import EntityRegistry
 
-from pyscript_mock import *
 # noinspection PyBroadException
 try:
     """works in pyscript environment only"""
@@ -19,7 +18,6 @@ try:
     task.current_task()
 except:
     from pyscript_builtins import *
-
 
 class Generator:
     BASE_ENTITYCLASS_NAME = "_entity"
