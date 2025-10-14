@@ -105,6 +105,10 @@ class state:
     def setattr(name, value):
         ...
 
+    @staticmethod
+    def exist(entity_id) -> bool:
+        ...
+
 
 class event:
     @staticmethod
