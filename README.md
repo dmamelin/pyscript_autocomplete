@@ -1,3 +1,7 @@
+# ⚠️ Project Status
+Merged into [Pyscript integration](https://github.com/custom-components/pyscript).  
+This repository is archived and kept for reference.
+
 
 # Home Assistant PyScript Autocomplete
 This **experimental** project offers a solution to enhance PyScript script development for Home Assistant by providing autocomplete functionality in development environments. 
